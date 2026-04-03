@@ -1,0 +1,9 @@
+/.local
+/.data
+dist
+*.exe
+
+/alicloud-tool
+
+# experiment files in root dir
+/*.*
