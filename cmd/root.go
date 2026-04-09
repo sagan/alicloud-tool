@@ -12,10 +12,13 @@ import (
 	"github.com/spf13/viper"
 )
 
+const Version = "0.1.1"
+
 var rootCmd = &cobra.Command{
-	Use:   "alicloud-tool",
-	Short: "A tool to manage and monitor Alibaba Cloud ECS and CDT",
-	Long:  `A command line tool specifically designed to start/stop ECS instances based on CDT traffic thresholds.
+	Use:     "alicloud-tool",
+	Short:   "A tool to manage and monitor Alibaba Cloud ECS and CDT",
+	Version: Version,
+	Long: `A command line tool specifically designed to start/stop ECS instances based on CDT traffic thresholds.
 
 Note: All settings can also be configured using environment variables.
 The corresponding environment variables are prefixed with "ALIBABA_CLOUD_"

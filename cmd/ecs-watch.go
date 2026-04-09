@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"math"
@@ -30,6 +31,7 @@ var ecsWatchCmd = &cobra.Command{
 		if err != nil {
 			log.Fatalf("Error: %v", err)
 		}
+		log.Printf("Current Total Internet Traffic: %.2f GB", totalGB)
 
 		ecsClient, err := getEcsClient()
 		if err != nil {
@@ -109,12 +111,21 @@ func getTotalTrafficGB() (float64, error) {
 		if !ok {
 			continue
 		}
-		if traffic, valOk := detailMap["Traffic"].(float64); valOk {
-			totalBytes += traffic
+		trafficRaw, valOk := detailMap["Traffic"]
+		if !valOk {
+			continue
+		}
+		
+		switch v := trafficRaw.(type) {
+		case float64:
+			totalBytes += v
+		case json.Number:
+			if traffic, err := v.Float64(); err == nil {
+				totalBytes += traffic
+			}
 		}
 	}
 
 	totalGB := totalBytes / math.Pow(1024, 3)
-	log.Printf("Current Total Internet Traffic: %.2f GB", totalGB)
 	return totalGB, nil
 }
