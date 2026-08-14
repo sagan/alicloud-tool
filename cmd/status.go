@@ -9,6 +9,7 @@ import (
 	util "github.com/alibabacloud-go/tea-utils/v2/service"
 	"github.com/alibabacloud-go/tea/tea"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 var statusCmd = &cobra.Command{
@@ -35,7 +36,7 @@ var statusCmd = &cobra.Command{
 		}
 
 		now := time.Now()
-		for i := 0; i < 3; i++ {
+		for i := range 3 {
 			targetDate := now.AddDate(0, -i, 0)
 			billingCycle := targetDate.Format("2006-01")
 
@@ -58,7 +59,11 @@ func getBssClient() (*openapi.Client, error) {
 	if err != nil {
 		return nil, err
 	}
-	config.Endpoint = tea.String("business.ap-southeast-1.aliyuncs.com")
+	if viper.GetBool("ALIBABA_CLOUD_CN") {
+		config.Endpoint = tea.String("business.aliyuncs.com")
+	} else {
+		config.Endpoint = tea.String("business.ap-southeast-1.aliyuncs.com")
+	}
 	return openapi.NewClient(config)
 }
 

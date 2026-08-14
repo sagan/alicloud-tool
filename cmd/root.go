@@ -40,11 +40,13 @@ func init() {
 	rootCmd.PersistentFlags().String("access-key-secret", "", "Alibaba Cloud Access Key Secret (Env: ALIBABA_CLOUD_ACCESS_KEY_SECRET)")
 	rootCmd.PersistentFlags().String("region", "cn-hongkong", "Alibaba Cloud Region (Env: ALIBABA_CLOUD_REGION)")
 	rootCmd.PersistentFlags().String("instance-id", "", "Alibaba Cloud ECS Instance ID (Env: ALIBABA_CLOUD_INSTANCE_ID)")
+	rootCmd.PersistentFlags().Bool("cn", false, "Use Aliyun (Mainland China version alibaba cloud) (Env: ALIBABA_CLOUD_CN)")
 
 	viper.BindPFlag("ALIBABA_CLOUD_ACCESS_KEY_ID", rootCmd.PersistentFlags().Lookup("access-key-id"))
 	viper.BindPFlag("ALIBABA_CLOUD_ACCESS_KEY_SECRET", rootCmd.PersistentFlags().Lookup("access-key-secret"))
 	viper.BindPFlag("ALIBABA_CLOUD_REGION", rootCmd.PersistentFlags().Lookup("region"))
 	viper.BindPFlag("ALIBABA_CLOUD_INSTANCE_ID", rootCmd.PersistentFlags().Lookup("instance-id"))
+	viper.BindPFlag("ALIBABA_CLOUD_CN", rootCmd.PersistentFlags().Lookup("cn"))
 
 	viper.AutomaticEnv() // Read from environment variables
 }
